@@ -10,7 +10,7 @@ const Page = ({ title }) => {
 
   return (
     <div className="page flex" onClick={change}>
-        <span>{title}</span>
+        <h2 className='pageTitle'>{title}</h2>
         <span><TiDelete className="deletePage"/></span>
     </div>
   )

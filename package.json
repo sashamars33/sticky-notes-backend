@@ -36,5 +36,17 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "This is a fun personal organizational app inspired my use of post-it notes in real life. This site gives you a personal sitcky note board where you can post notes to various pages with different topics or unifying theme. Notes are draggable to create a dynamic feel similar to that of posting sticky notes around a space.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sashamars33/sticky-notes.git"
+  },
+  "author": "Sasha Marshall",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sashamars33/sticky-notes/issues"
+  },
+  "homepage": "https://github.com/sashamars33/sticky-notes#readme",
+  "proxy": "https://localhost:4000/"
 }
