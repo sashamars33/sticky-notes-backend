@@ -12,4 +12,4 @@ In the early stages of design and structure. Currently building out styling and 
 Optimizations: coming soon
 
 Lessons Learned: The biggest lesson I have learned throughout this build so far is how to deal with components in react and how build functionality into them.
->>>>>>> 0a8e14989abe0ca508e362cdad599c5cfe321460
+
