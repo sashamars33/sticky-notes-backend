@@ -14,10 +14,7 @@ const password = process.env.MONGO_PASS
 app.use(cors());
 
 
-app.post('/post', (req,res) => {
-    console.log('connected to react');
-    res.redirect('/');
-})
+
 
 MongoClient.connect(`mongodb+srv://sashamars:${password}@cluster0.lmzzc8q.mongodb.net/?retryWrites=true&w=majority`, {useUnifiedTopology: true})
     .then(client => {
@@ -26,13 +23,12 @@ MongoClient.connect(`mongodb+srv://sashamars:${password}@cluster0.lmzzc8q.mongod
         const pageCollection = db.collection('pages');
         const noteCollection = db.collection('notes');
 
-        app.use(bodyParser.json())
+        app.use(express.json())
         app.use(bodyParser.urlencoded({ extended: true }));
 
         app.get('/pages', (req, res) => {
             pageCollection.find().toArray()
             .then(results => {
-                console.log(results);
                 res.send(results);
             })
             .catch(error => console.log(error));
@@ -41,7 +37,6 @@ MongoClient.connect(`mongodb+srv://sashamars:${password}@cluster0.lmzzc8q.mongod
         app.get('/notes', (req, res) => {
             noteCollection.find().toArray()
             .then(results => {
-                console.log(results);
                 res.send(results);
             })
         })
@@ -70,7 +65,6 @@ MongoClient.connect(`mongodb+srv://sashamars:${password}@cluster0.lmzzc8q.mongod
 
                 .then(result => {
                     res.json("Success")
-                    console.log(result)
                 })
                 .catch(error => console.log(error))
             }else if(req.body.selected === false){
@@ -86,14 +80,12 @@ MongoClient.connect(`mongodb+srv://sashamars:${password}@cluster0.lmzzc8q.mongod
                     
                     .then(result => {
                         res.json("Success")
-                        console.log(result)
                     })
                     .catch(error => console.log(error))
             }
         });
 
         app.put('/notes', (req, res) => {
-            console.log(req.body);
             noteCollection.findOneAndUpdate({
                 page: req.body.page,
                 note: req.body.note
@@ -119,8 +111,11 @@ MongoClient.connect(`mongodb+srv://sashamars:${password}@cluster0.lmzzc8q.mongod
                 pageTitle: req.body.pageTitle,
                 selected: false
             })
-            .then(result => {
-                res.redirect('/');
+            .then((results) => {
+                res.json({
+                    pageTitle: req.body.pageTitle,
+                    selected: false
+                })
             })
             .catch(error => console.log(error));
         });
@@ -131,29 +126,36 @@ MongoClient.connect(`mongodb+srv://sashamars:${password}@cluster0.lmzzc8q.mongod
 
             const color = colorPaletteOne[Math.floor(Math.random()*(colorPaletteOne.length))];
 
-            noteCollection.insertOne({ note: req.body.note, page: req.body.page, color: color, position: {x: 0, y:0}})
+            console.log(req.body, color)
+            noteCollection.insertOne({ 
+                note: req.body.note, 
+                page: req.body.pageTitle, 
+                color: color, 
+                position: {x: 0, y:0}})
             .then(result => {
-                res.redirect('/')
+                console.log(result)
+                res.json({
+                    note: req.body.note, 
+                    page: req.body.pageTitle, 
+                    color: color, 
+                    position: {x: 0, y:0}})
             })
             .catch(error => console.log(error));
         })
 
         app.delete('/notes', (req, res) => {
-            console.log(req.body)
             if(req.body.pageDeleted === true){
                 noteCollection.deleteMany({
                     page: req.body.page
                 })
                 .then(result => {
                     res.json(`Deleted Notes`)
-                    console.log(result);
                 })
                 .catch(error => console.log(error))
             }else{
                 noteCollection.findOneAndDelete({note: req.body.note, page: req.body.page})
                 .then(result => {
                     res.json('Deleted Note');
-                    console.log(result);
                 })
                 .catch(error => console.log(error))
             }
