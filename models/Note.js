@@ -14,7 +14,7 @@ const NoteSchema = new mongoose.Schema({
         required: true
     },
     position: {
-        x: 50,
-        y: 50
+        type: Object,
+        required: true
     }
 })

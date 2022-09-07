@@ -9,7 +9,10 @@ const PageSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    selected: false
+    selected: {
+        type: Boolean,
+        required: true
+    }
 })
 
 module.exports = mongoose.model('Page', PageSchema)
