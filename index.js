@@ -1,13 +1,19 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
-const passport = require('express-session')
-const MongoStore = require('connect-mongo')(session)
+const passport = require('passport')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')
 const flash = require('express-flash')
 const morgan = require('morgan')
 const connectDB = require('./config/db')
 const homeRoutes = require('./routes/home')
-const pageRoutes = require('./routes/page')
+const pageRoutes = require('./routes/pages')
+const cors = require('cors');
+
+const PORT = process.env.PORT || 3001
+
+
 
 require('dotenv').config({path: './config/.env'})
 
@@ -15,6 +21,7 @@ require('./config/passport')(passport)
 
 connectDB()
 
+app.use(cors())
 app.use(express.urlencoded({ exteneded: true }))
 app.use(express.json())
 
@@ -26,21 +33,21 @@ app.use(
     session({
         secret: process.env.SESSION_SECRET,
         resave: false,
-        store: new MongoStore({
-            mongooseConnection: mongoose.connection
+        store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })
         })
-    })
 )
 
-app.use(passport.intialize())
+app.use(passport.initialize())
 app.use(passport.session())
+
+app.use(flash())
 
 app.use('/', homeRoutes)
 app.use('/pages', pageRoutes)
 
-app.listen(process.env.PORT, () => {
+app.listen(PORT, () => {
     if(process.env.NODE_ENV === 'development'){
-        console.log('Server is running')
+        console.log(PORT)
     }
 })
 
