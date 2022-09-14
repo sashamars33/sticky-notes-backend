@@ -7,8 +7,8 @@ const MongoStore = require('connect-mongo')
 const flash = require('express-flash')
 const morgan = require('morgan')
 const connectDB = require('./config/db')
-const homeRoutes = require('./routes/home')
-const pageRoutes = require('./routes/pages')
+const homeRoutes = require('./routes/home', passport)
+const pageRoutes = require('./routes/pages', passport)
 const cors = require('cors');
 
 const PORT = process.env.PORT || 3001
