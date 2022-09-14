@@ -1,15 +1,18 @@
 const Note = require('../models/Note')
 const Page = require('../models/Page')
+const { ensureAuth } = require('../middleware/auth')
+
 
 module.exports = {
     getPages: async (req, res) => {
-
-        console.log(req.user, req.user.id)
+        console.log(!ensureAuth, req.user._id)
         try{
-            const pages = await Page.find({userId:req.user.id})
-
-            console.log(pages)
-            res.send({ pages: pages })
+            const pages = await Page.find({user: req.user._id})
+            if(!ensureAuth){
+                res.send(false)
+            }else{
+                res.send({pages: pages})
+            }
         }catch(err){
             console.log(err)
         }
@@ -77,7 +80,7 @@ module.exports = {
 
         const color = colorPaletteOne[Math.floor(Math.random()*(colorPaletteOne.length))];
 
-        console.log(req.body.page._id, color)
+        console.log(color, req.body)
 
         try {
             await Note.create({

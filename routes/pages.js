@@ -3,7 +3,9 @@ const router = express.Router()
 const pageController = require('../controllers/pages')
 const { ensureAuth } = require('../middleware/auth')
 
-router.get('/', ensureAuth, pageController.getPages)
+
+
+router.get('/', pageController.getPages)
 router.post('/createpage', pageController.createPage)
 router.put('/select', pageController.selectPage)
 router.delete('/deletepage', pageController.deletePage)
