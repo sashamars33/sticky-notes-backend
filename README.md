@@ -13,3 +13,4 @@ Optimizations: coming soon
 
 Lessons Learned: The biggest lesson I have learned throughout this build so far is how to deal with components in react and how build functionality into them.
 
+Front-end Repo: https://github.com/sashamars33/sticky-notes
