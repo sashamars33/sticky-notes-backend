@@ -22,7 +22,7 @@ require('./config/passport')(passport)
 connectDB()
 
 app.use(cors())
-app.use(express.urlencoded({ exteneded: true }))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 if(process.env.NODE_ENV === 'development' ){
@@ -33,6 +33,7 @@ app.use(
     session({
         secret: process.env.SESSION_SECRET,
         resave: false,
+        saveUninitialized: false,
         store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })
         })
 )

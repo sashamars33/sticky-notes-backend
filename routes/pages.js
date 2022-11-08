@@ -6,6 +6,7 @@ const { ensureAuth } = require('../middleware/auth')
 
 
 router.get('/', pageController.getPages)
+// router.get('/user', pageController.getUser)
 router.post('/createpage', pageController.createPage)
 router.put('/select', pageController.selectPage)
 router.delete('/deletepage', pageController.deletePage)
