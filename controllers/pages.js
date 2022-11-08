@@ -4,13 +4,17 @@ const { ensureAuth } = require('../middleware/auth')
 
 
 module.exports = {
+    // getUser: async (req, res) => {
+    //     const user = await req.user
+    //     console.log(user)
+    //     res.send(user)
+    // },
     getPages: async (req, res) => {
-        console.log(!ensureAuth, req.user._id)
         try{
-            const pages = await Page.find({user: req.user._id})
-            if(!ensureAuth){
+            if(!req.user){
                 res.send(false)
             }else{
+                const pages = await Page.find({user: req.user._id})
                 res.send({pages: pages})
             }
         }catch(err){
@@ -51,7 +55,7 @@ module.exports = {
     deleteNotes: async (req, res) => {
         try{
             await Note.deleteMany({page: req.body.pageId})
-            res.send(200)
+            res.sendStatus(200)
         }catch(err){
             console.log(err)
         }
@@ -59,17 +63,22 @@ module.exports = {
     deletePage: async (req, res) => {
         try{
             await Page.findOneAndDelete({ _id: req.body.pageId })
-            res.send(200)
+            res.sendStatus(200)
         }catch(err){
             console.log(err)
         }
     },
     getNotes: async (req,res) => {
         try{
-            // const pageId = await Page.find({ selected: true })
-            const notes = await Note.find({})
+            if(!req.user){
+                res.send(false)
+            }else{
+                const notes = await Note.find({})
+                res.send({notes: notes})
+            }
+            // const notes = await Note.find({})
 
-            res.send({ notes: notes })
+            // res.send({ notes: notes })
         }catch(err){
             console.log(err)
         }
@@ -142,7 +151,7 @@ module.exports = {
     deleteNote: async (req, res) => {
         try{
             await Note.findOneAndDelete({_id: req.body.noteId})
-            res.send(200)
+            res.sendStatus(200)
         }catch(err){
             console.log(err)
         }
