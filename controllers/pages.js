@@ -85,56 +85,63 @@ module.exports = {
     },
     createNote: async (req, res) => {
 
-        const colorPaletteOne = ['#5B8D8Eff','#7CA4A3ff','#8BB0C3ff','#8DBFB3ff','#7CB089ff','#83C5CBff','#A2DEEEff','#BCB4E0ff','#C6C4F6ff','#B3AADEff']
+        const colorPaletteOne = [0,'#85c8f5','#93fadb','#d2ff8f','#faaa88','#ff5a51']
 
-        const color = colorPaletteOne[Math.floor(Math.random()*(colorPaletteOne.length))];
-
-        console.log(color, req.body)
+        const color = colorPaletteOne[req.body.rating];
 
         try {
             await Note.create({
                 note: req.body.note, 
                 page: req.body.page._id,
                 color: color,
-                position: {
-                    x: 50,
-                    y: 50
-                }
+                rating: req.body.rating,
+                completed: false
             })
 
             res.json({
                 note: req.body.note, 
                 page: req.body.page._id,
                 color: color,
-                position: {
-                    x: 50,
-                    y: 50
-                }
+                rating: req.body.rating,
+                completed: false
             })
         }catch(err){
             console.log(err)
         }
-    },
-    updatePos: async (req, res) => {
-        console.log(req.body)
+     },
+     updateComplete: async(req,res) => {
         try{
-            await Note.findOneAndUpdate({
+            await Note.findOneAndUpdate
+            ({
                 _id: req.body.noteId
-            },{
-                position: {
-                    x: req.body.position.x,
-                    y: req.body.position.y
-                }
+            }, {
+                completed: !req.body.comp
             })
-
-            res.send({
-                x: req.body.position.x,
-                y: req.body.position.y
-            })
+            res.send(true)
         }catch(err){
             console.log(err)
         }
-    },
+     },
+    // updatePos: async (req, res) => {
+    //     console.log(req.body)
+    //     try{
+    //         await Note.findOneAndUpdate({
+    //             _id: req.body.noteId
+    //         },{
+    //             position: {
+    //                 x: req.body.position.x,
+    //                 y: req.body.position.y
+    //             }
+    //         })
+
+    //         res.send({
+    //             x: req.body.position.x,
+    //             y: req.body.position.y
+    //         })
+    //     }catch(err){
+    //         console.log(err)
+    //     }
+    // },
     closePage: async (req, res) => {
         try{
             await Page.findOneAndUpdate

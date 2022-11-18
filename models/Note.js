@@ -13,10 +13,18 @@ const NoteSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    position: {
-        type: Object,
+    rating: {
+        type: Number,
+        required: true
+    },
+    completed: {
+        type: Boolean,
         required: true
     }
+    // position: {
+    //     type: Object,
+    //     required: true
+    // }
 })
 
 module.exports = mongoose.model('Note', NoteSchema)
