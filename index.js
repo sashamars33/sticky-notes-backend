@@ -46,7 +46,7 @@ app.use(flash())
 app.use('/', homeRoutes)
 app.use('/pages', pageRoutes)
 
-this.app.use(
+app.use(
     express.static(path.join(__dirname, "../client/build"))
   );
 
