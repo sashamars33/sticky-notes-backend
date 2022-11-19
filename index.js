@@ -46,6 +46,7 @@ app.use(flash())
 app.use('/', homeRoutes)
 app.use('/pages', pageRoutes)
 
+
 app.listen(PORT, () => {
     if(process.env.NODE_ENV === 'development'){
         console.log(PORT)
