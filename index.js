@@ -48,7 +48,7 @@ app.use('/', homeRoutes)
 app.use('/pages', pageRoutes)
 
 app.use(
-    express.static(path.join(__dirname, "../client/build"))
+    express.static(path.join(__dirname, "./client/build"))
   );
 
 app.listen(PORT, () => {
