@@ -46,6 +46,9 @@ app.use(flash())
 app.use('/', homeRoutes)
 app.use('/pages', pageRoutes)
 
+this.app.use(
+    express.static(path.join(__dirname, "../client/build"))
+  );
 
 app.listen(PORT, () => {
     if(process.env.NODE_ENV === 'development'){
