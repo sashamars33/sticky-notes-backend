@@ -12,6 +12,7 @@ const homeRoutes = require('./routes/home', passport)
 const pageRoutes = require('./routes/pages', passport)
 const cors = require('cors');
 
+
 const PORT = process.env.PORT || 3001
 
 
@@ -48,8 +49,9 @@ app.use('/', homeRoutes)
 app.use('/pages', pageRoutes)
 
 app.use(
-    express.static(path.join(__dirname, "./client/build"))
+    express.static(path.join(__dirname, "./client/build", 'index.html'))
   );
+
 
 app.listen(PORT, () => {
     if(process.env.NODE_ENV === 'development'){
