@@ -6,7 +6,6 @@ const connectDB = async () => {
             useNewUrlParser: true,
             useUnifiedTopology: false
         })
-        console.log(conn)
         if(process.env.NODE_ENV === 'development'){
             console.log('MongoDB connected')
         }
